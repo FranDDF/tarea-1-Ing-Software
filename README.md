@@ -1,15 +1,56 @@
-# tarea-1-Ing-Software
+# Proyecto Spring Boot + Docker
 
-PASOS:
+## PASOS:
 
-1- Descargar Docker para desktop: https://www.docker.com/products/docker-desktop/ y el Java Development Kit 17: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html
-2- Crear el proyecto en Spring Boot desde https://start.spring.io/, en el apartado Project seleccionar Maven, en la sección de Language, seleccionar Java y la versión de Spring Boot 3.5.0. En el apartado de Project Metadata, nombrar los campos. En Packaging, seleccionar Jar y por último, en Java seleccionar 17. Agregar las dependencias de Spring web, Spring Boot Dev Tools y Lombok. Como paso final, generar el proyecto
-3- Crear un package llamado Controller y dentro del mismo, crear una clase con nombre a definir. En la misma, agregar un endpoint de tipo GET
-4- Se ejecuta en el puerto 8080 por defecto
-5- Generar el .jar dentro del directorio del proyecto
-6- Crear un archivo llamado Dockerfile, debe contener lo siguiente:
-FROM openjdk:17-jdk-slim
-COPY target/probandoGET-0.0.1-SNAPSHOT.jar app.jar
-ENTRYPOINT ["java", "-jar", "/app.jar"]
-7-Desde la consola, ejecutar "docker build -t probando-get-app ." para construir la imagen en Docker
-8- Correr el contenedor, ejecutando "docker run -p 8080:8080 probando-get-app"
+1. **Descargar dependencias necesarias**  
+   - Docker Desktop: https://www.docker.com/products/docker-desktop/  
+   - Java Development Kit 17: https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html  
+
+2. **Crear el proyecto en Spring Boot**  
+   - Ir a https://start.spring.io/  
+   - Seleccionar:  
+     - Project: Maven  
+     - Language: Java  
+     - Spring Boot: 3.5.0  
+     - Packaging: Jar  
+     - Java: 17  
+     - Agregar dependencias: Spring Web, Spring Boot Dev Tools y Lombok  
+   - Hacer clic en "Generate" para descargar el proyecto
+
+3. **Crear una clase controladora**  
+   - Crear un paquete llamado `controller`  
+   - Dentro, crear una clase con un endpoint GET de prueba  
+   - La aplicación se ejecuta por defecto en el puerto 8080  
+
+4. **Generar el `.jar` del proyecto**  
+   - Abrir la consola en la raíz del proyecto  
+   - Ejecutar:  
+     ```bash
+     ./mvnw clean package
+     ```  
+   - El archivo `.jar` se generará dentro de la carpeta `target/`  
+
+5. **Crear un archivo Dockerfile**  
+   - En la raíz del proyecto, crear un archivo llamado `Dockerfile` con este contenido:  
+     ```dockerfile
+     FROM openjdk:17-jdk-slim
+     COPY target/probandoGET-0.0.1-SNAPSHOT.jar app.jar
+     ENTRYPOINT ["java", "-jar", "/app.jar"]
+     ```
+
+6. **Construir la imagen Docker**  
+   - En la consola, en la raíz del proyecto, ejecutar:  
+     ```bash
+     docker build -t probando-get-app .
+     ```
+
+7. **Ejecutar el contenedor Docker**  
+   - Ejecutar el contenedor con el siguiente comando:  
+     ```bash
+     docker run -p 8080:8080 probando-get-app
+     ```
+
+8. **Verificar en el navegador**  
+   - Abrir `http://localhost:8080/api/hola`  
+   - Si todo salió bien, vas a ver el mensaje del endpoint
+
